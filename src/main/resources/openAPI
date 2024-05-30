@@ -1,0 +1,421 @@
+openapi: 3.0.1
+info:
+  title: E-Learning API
+  description: API for managing e-learning courses, lessons, and questions
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /courses:
+    get:
+      summary: Get all courses
+      tags:
+        - Courses
+      responses:
+        '200':
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseDto'
+    post:
+      summary: Create a new course
+      tags:
+        - Courses
+      requestBody:
+        description: Course to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseDto'
+      responses:
+        '201':
+          description: Created course
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseDto'
+
+  /courses/{courseId}:
+    get:
+      summary: Get course by ID
+      tags:
+        - Courses
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the course to retrieve
+      responses:
+        '200':
+          description: Course details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseDto'
+    put:
+      summary: Update a course
+      tags:
+        - Courses
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the course to update
+      requestBody:
+        description: Updated course details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseDto'
+      responses:
+        '200':
+          description: Updated course
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseDto'
+    delete:
+      summary: Delete a course
+      tags:
+        - Courses
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the course to delete
+      responses:
+        '204':
+          description: Course deleted successfully
+
+  /courses/{courseId}/lessons:
+    get:
+      summary: Get lessons by course ID
+      tags:
+        - Lessons
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the course
+      responses:
+        '200':
+          description: List of lessons
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LessonDto'
+    post:
+      summary: Create a new lesson
+      tags:
+        - Lessons
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the course
+      requestBody:
+        description: Lesson to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonDto'
+      responses:
+        '201':
+          description: Created lesson
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonDto'
+
+  /lessons/{lessonId}:
+    get:
+      summary: Get lesson by ID
+      tags:
+        - Lessons
+      parameters:
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the lesson to retrieve
+      responses:
+        '200':
+          description: Lesson details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonDto'
+    put:
+      summary: Update a lesson
+      tags:
+        - Lessons
+      parameters:
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the lesson to update
+      requestBody:
+        description: Updated lesson details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonDto'
+      responses:
+        '200':
+          description: Updated lesson
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonDto'
+    delete:
+      summary: Delete a lesson
+      tags:
+        - Lessons
+      parameters:
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the lesson to delete
+      responses:
+        '204':
+          description: Lesson deleted successfully
+
+  /lessons/{lessonId}/questions:
+    get:
+      summary: Get questions by lesson ID
+      tags:
+        - Questions
+      parameters:
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the lesson
+      responses:
+        '200':
+          description: List of questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuestionDto'
+    post:
+      summary: Create a new question
+      tags:
+        - Questions
+      parameters:
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the lesson
+      requestBody:
+        description: Question to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionDto'
+      responses:
+        '201':
+          description: Created question
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionDto'
+
+  /questions/{questionId}:
+    get:
+      summary: Get question by ID
+      tags:
+        - Questions
+      parameters:
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the question to retrieve
+      responses:
+        '200':
+          description: Question details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionDto'
+    put:
+      summary: Update a question
+      tags:
+        - Questions
+      parameters:
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the question to update
+      requestBody:
+        description: Updated question details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionDto'
+      responses:
+        '200':
+          description: Updated question
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionDto'
+    delete:
+      summary: Delete a question
+      tags:
+        - Questions
+      parameters:
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the question to delete
+      responses:
+        '204':
+          description: Question deleted successfully
+
+  /lessons/{lessonId}/approve:
+    post:
+      summary: Approve a lesson
+      tags:
+        - Lessons
+      parameters:
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the lesson to approve
+      requestBody:
+        description: List of answers for the lesson questions
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: Approval status
+          content:
+            application/json:
+              schema:
+                type: boolean
+
+  /courses/{courseId}/approve:
+    post:
+      summary: Approve a course
+      tags:
+        - Courses
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the course to approve
+      requestBody:
+        description: List of approved lesson IDs
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+      responses:
+        '200':
+          description: Approval status
+          content:
+            application/json:
+              schema:
+                type: boolean
+
+components:
+  schemas:
+    CourseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        lessons:
+          type: array
+          items:
+            $ref: '#/components/schemas/LessonDto'
+
+    LessonDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        courseId:
+          type: integer
+        approvalThreshold:
+          type: integer
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionDto'
+
+    QuestionDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        text:
+          type: string
+        score:
+          type: integer
+        type:
+          type: string
+        lessonId:
+          type: integer
+        options:
+          type: array
+          items:
+            type: string
+        correctAnswer:
+          type: string
